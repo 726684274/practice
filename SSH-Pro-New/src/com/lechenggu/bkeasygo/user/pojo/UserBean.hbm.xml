@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- name指实体类所在的路径    table是数据库中的表名  （对应数据库中要大写） -->
+	<class name="com.lechenggu.bkeasygo.user.pojo.UserBean" table="TUSER">
+		<!-- 主键字段映射描述 -->
+		<!-- name 指定属性名    type指定数据类型 -->
+		<id name="userid" type="java.lang.Integer">
+			<!-- name指定字段名（与数据库一致   大写） -->
+			<column name="USERID"></column>
+			<generator class="sequence">
+  				<param name="sequence">
+   					sequence_tuser
+  				</param>
+			</generator>
+		</id>
+		<!-- 普通字段映射描述 -->
+		<property name="username" type="java.lang.String">
+			<column name="USERNAME"></column>
+		</property>
+		<property name="truename" type="java.lang.String">
+			<column name="TRUENAME"></column>
+		</property>
+		<property name="password" type="java.lang.String">
+			<column name="PASSWORD"></column>
+		</property>
+		<property name="sex" type="java.lang.Integer">
+			<column name="SEX"></column>
+		</property>
+		<property name="birth" type="java.lang.String">
+			<column name="BIRTH"></column>
+		</property>
+		<property name="cardid" type="java.lang.String">
+			<column name="CARDID"></column>
+		</property>
+		<property name="email" type="java.lang.String">
+			<column name="EMAIL"></column>
+		</property>
+		<property name="tel" type="java.lang.String">
+			<column name="TEL"></column>
+		</property>
+		<property name="address" type="java.lang.String">
+			<column name="ADDRESS"></column>
+		</property>
+		<property name="ifuse" type="java.lang.Integer">
+			<column name="IFUSE"></column>
+		</property>
+		<property name="createman" type="java.lang.Integer">
+			<column name="CREATEMAN"></column>
+		</property>
+		<property name="createtime" type="java.util.Date">
+			<column name="CREATETIME"></column>
+		</property>
+		 <!-- <property name="updateman" type="java.lang.Integer">
+			<column name="UPDATEMAN"></column>
+		</property>
+		<property name="updatetime" type="java.util.String">
+			<column name="UPDATETIME"></column>
+		</property>  -->
+	</class>	
+
+
+</hibernate-mapping>

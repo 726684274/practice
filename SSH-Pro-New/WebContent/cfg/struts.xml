@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 文档类型定义(Document Type Definition)是一套为了 进行程序间的数据交换而建立的关于标记符的语法规则。 -->
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 还用动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<!-- 指定每次配置文件更改后，自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+
+	<package name="bkyg" namespace="/" extends="struts-default">
+		 <!-- 注册拦截器 -->
+	<interceptors>
+			<!-- 定义拦截器 -->
+			<interceptor name="LoginInterceptor"
+				class="com.lechenggu.bkeasygo.interceptor.LoginInterceptor"></interceptor>
+			<!-- 定义拦截器栈 -->
+			<interceptor-stack name="myStack">
+				<!-- 引入定义好的拦截器 -->
+				<interceptor-ref name="LoginInterceptor">
+					<!-- 不拦截的方法 -->
+					<param name="excludeMethods">login</param>
+				</interceptor-ref>
+				<!-- 引入默认的拦截器 -->
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+	<!-- 	设置整个包的拦截器 -->
+		<default-interceptor-ref name="myStack"></default-interceptor-ref>
+		<!-- 公共跳转页面 -->
+		<global-results>
+			<result name="reLogin">
+				/login.jsp
+			</result>
+		</global-results>
+		<!--跳转到登录页面 该action在后台中没有相对应的方法 只是一个跳转页面的action 对外屏蔽jsp路径 -->
+		<action name="toLogin">
+			<result>
+				/login.jsp
+			</result>
+		</action>
+		
+	</package>
+	<include file="../../cfg/login.xml"></include>
+	<include file="../../cfg/user.xml"></include>
+	<include file="../../cfg/announcement.xml"></include>
+	<include file="../../cfg/order.xml"></include>
+	<include file="../../cfg/json.xml"></include>
+	<include file="../../cfg/goods.xml"></include>
+	<include file="../../cfg/sub.xml"></include> 
+	<include file="../../cfg/sup.xml"></include> 
+	
+		<!-- 利用ajax判断用户名是否存在 -->
+		<!-- <action name="ckusername" class="com.lechenggu.bkeasygo.user.action.CKUsernameAction">
+			<result type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">myMSG</param>
+			</result>
+		</action> -->
+
+	
+</struts>

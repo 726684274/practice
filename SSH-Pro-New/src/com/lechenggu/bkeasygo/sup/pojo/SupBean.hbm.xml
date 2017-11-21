@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- name指实体类所在的路径    table是数据库中的表名  （对应数据库中要大写） -->
+	<class name="com.lechenggu.bkeasygo.sup.pojo.SupBean" table="TSUP">
+		<!-- 主键字段映射描述 -->
+		<!-- name 指定属性名    type指定数据类型 -->
+		<id name="supid" type="java.lang.Integer">
+			<!-- name指定字段名（与数据库一致   大写） -->
+			<column name="SUPID"></column>
+			<generator class="sequence">
+  				<param name="sequence">
+   					sequence_tsup
+  				</param>
+			</generator>
+		</id>
+		<!-- 普通字段映射描述 -->
+		<property name="supname" type="java.lang.String">
+			<column name="SUPNAME"></column>
+		</property>
+		 <property name="createman" type="java.lang.Integer">
+			<column name="CREATEMAN"></column>
+		</property>
+		<property name="createtime" type="java.util.Date">
+			<column name="CREATETIME"></column>
+		</property>
+		<!-- 配置一的一方 -->
+		 <set name="sub">
+			<key column="SUPID"></key>
+			<one-to-many class="com.lechenggu.bkeasygo.sub.pojo.SubCategoryBean"/>
+		</set>
+		<!-- 配置一的一方  对商品-->
+		 <set name="goods">
+			<key column="SUPID"></key>
+			<one-to-many class="com.lechenggu.bkeasygo.goods.pojo.GoodsBean"/>
+		</set>
+	</class>	
+
+
+</hibernate-mapping>

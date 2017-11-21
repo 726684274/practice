@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 文档类型定义(Document Type Definition)是一套为了 进行程序间的数据交换而建立的关于标记符的语法规则。 -->
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+<!-- 还用动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<!-- 指定每次配置文件更改后，自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<package name="login" namespace="/" extends="bkyg">
+		<!-- 处理登录请求 -->
+		<action name="loginaction" class="loginAction" method="login">
+			<result name="success">
+				/index.jsp
+			</result>
+			<result name="error">
+				/login.jsp
+			</result>
+		</action>
+		<!-- 注销 -->
+		<action name="loginexit" class="com.lechenggu.bkeasygo.login.action.LoginExitAction" method="loginexit">
+			<result name="success">
+				/login.jsp
+			</result>
+		</action>
+	</package>
+</struts>

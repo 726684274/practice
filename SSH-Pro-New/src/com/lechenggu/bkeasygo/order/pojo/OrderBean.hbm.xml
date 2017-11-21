@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- name指实体类所在的路径    table是数据库中的表名  （对应数据库中要大写） -->
+	<class name="com.lechenggu.bkeasygo.order.pojo.OrderBean" table="TORDER">
+		<!-- 主键字段映射描述 -->
+		<!-- name 指定属性名    type指定数据类型 -->
+		<id name="oid" type="java.lang.Integer">
+			<!-- name指定字段名（与数据库一致   大写） -->
+			<column name="OID"></column>
+			<generator class="sequence">
+  				<param name="sequence">
+   					sequence_torder
+  				</param>
+			</generator>
+		</id>
+		<!-- 普通字段映射描述 -->
+		<property name="userid" type="java.lang.Integer">
+			<column name="USERID"></column>
+		</property>
+		<property name="otime" type="java.util.Date">
+			<column name="OTIME"></column>
+		</property>
+		<property name="receman" type="java.lang.String">
+			<column name="RECEMAN"></column>
+		</property>
+		<property name="receaddress" type="java.lang.String">
+			<column name="RECEADDRESS"></column>
+		</property>
+		<property name="omoney" type="java.lang.Double">
+			<column name="OMONEY"></column>
+		</property>
+		<property name="ostate" type="java.lang.String">
+			<column name="OSTATE"></column>
+		</property>
+		<property name="createman" type="java.lang.Integer">
+			<column name="CREATEMAN"></column>
+		</property>
+		<property name="createtime" type="java.util.Date">
+			<column name="CREATETIME"></column>
+		</property>
+		<!-- <property name="updateman" type="java.lang.Integer">
+			<column name="CREATEMAN"></column>
+		</property>
+		<property name="updatetime" type="java.util.Date">
+			<column name="CREATETIME"></column>
+		</property> -->
+	</class>	
+
+
+</hibernate-mapping>

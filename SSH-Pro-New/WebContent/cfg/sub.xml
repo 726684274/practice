@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 文档类型定义(Document Type Definition)是一套为了 进行程序间的数据交换而建立的关于标记符的语法规则。 -->
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+<struts>
+<!-- 还用动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<!-- 指定每次配置文件更改后，自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<package name="sub" namespace="/" extends="bkyg">
+		<!-- 小分类新增 -->
+		<action name="subaddaction"
+			class="subCategoryAction" method="addSub">
+			<result name="success" type="redirectAction">
+				/subquerypage?page=1
+			</result>
+			<result name="error">
+				/category_add.jsp
+			</result>
+		</action>
+		<!-- 查询大分类的名字 -->
+		<!-- <action name="querysupnameaction"
+			class="com.lechenggu.bkeasygo.sub.action.QuerySupnameAction" method="querySupname">
+			<result name="success">
+				/category_add.jsp
+			</result>
+		</action> -->
+		<!-- 查询所有小分类 -->
+		<action name="subqueryall"
+			class="subCategoryAction" method="querySub">
+			<result name="success">
+				/category_manage.jsp
+			</result>
+		</action>
+		<!-- 分页查询小分类 -->
+		<action name="subquerypage"
+			class="subCategoryAction" method="querySubPage">
+			<result name="success">
+				/category_manage.jsp
+			</result>
+		</action>
+		<!-- 小分类删除 -->
+		<action name="deletesub"
+			class="subCategoryAction" method="deleteSub">
+			<result name="success" type="redirectAction">
+				/subquerypage?page=${page}
+			</result>
+			<result name="error" type="redirectAction">
+				/subquerypage?page=${page}
+			</result>
+		</action>
+		<!-- 根据id查询所有小分类 -->
+		<action name="subquerybyid"
+			class="subCategoryAction" method="subById">
+			<result name="success">
+				/category_modify.jsp
+			</result>
+		</action>
+		<!-- 修改小分类 -->
+		<action name="updatesub" class="subCategoryAction" method="updateSub">
+			<result name="success" type="redirectAction">
+				/subquerypage?page=1
+			</result>
+			<result name="error" type="redirectAction">
+				/subquerybyid?subid=${subid}
+			</result> 
+		</action>
+	</package>
+</struts>

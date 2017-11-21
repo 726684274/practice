@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 文档类型定义(Document Type Definition)是一套为了 进行程序间的数据交换而建立的关于标记符的语法规则。 -->
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+<struts>
+<!-- 还用动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<!-- 指定每次配置文件更改后，自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<!-- 商品中查询大分类和小分类的名字  通过json来实现struts2的ajax -->
+	<!-- 大分类中查询小分类的名字  通过json来实现struts2的ajax -->
+	<!-- 用户中判断用户名是否重名  通过json来实现struts2的ajax -->
+	<package name="json" namespace="/" extends="json-default">
+		 <!-- 商品中查询大分类名字 -->
+	<action name="querysupaction"
+			class="ajaxSupSubnameAction" method="querySupname">
+			<result type="json">
+				<param name="noCache">true</param>
+				<param name="root">myJSON</param>
+			</result>
+		</action> 
+		<!-- 商品中查询小分类名字 -->
+		<action name="querysubaction"
+			class="ajaxSupSubnameAction" method="querySubname">
+			<result type="json">
+				<param name="noCache">true</param>
+				<param name="root">myJSON</param>
+			</result>
+		</action>
+		<!-- 小分类中查询大分类名字 -->
+		<action name="querysupaction1"
+			class="ajaxSupnameAction" method="querySupname">
+			<result type="json">
+				<param name="noCache">true</param>
+				<param name="root">myJSON</param>
+			</result>
+		</action>
+		<!-- 判断用户名是否重名 -->
+		 <action name="ckusername"
+			class="userAction" method="CKUserName">
+			<result type="json">
+				<param name="noCache">true</param>
+				<param name="root">myJSON</param>
+			</result>
+		</action> 
+	</package>
+</struts>

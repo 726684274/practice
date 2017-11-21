@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- name指实体类所在的路径    table是数据库中的表名  （对应数据库中要大写） -->
+	<class name="com.lechenggu.bkeasygo.login.pojo.AdminBean" table="ADMIN">
+		<!-- 主键字段映射描述 -->
+		<!-- name 指定属性名    type指定数据类型 -->
+		<id name="id" type="java.lang.Integer">
+			<!-- name指定字段名（与数据库一致   大写） -->
+			<column name="ID"></column>
+			<generator class="sequence">
+  				<param name="sequence">
+   					sequence_admin
+  				</param>
+			</generator>
+		</id>
+		<!-- 普通字段映射描述 -->
+		<property name="name" type="java.lang.String">
+			<column name="NAME"></column>
+		</property>
+		<property name="password" type="java.lang.String">
+			<column name="PASSWORD"></column>
+		</property>
+		<property name="realname" type="java.lang.String">
+			<column name="REALNAME"></column>
+		</property>
+	</class>	
+
+
+</hibernate-mapping>

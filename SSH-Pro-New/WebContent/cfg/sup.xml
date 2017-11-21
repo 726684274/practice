@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 文档类型定义(Document Type Definition)是一套为了 进行程序间的数据交换而建立的关于标记符的语法规则。 -->
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+<struts>
+<!-- 还用动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<!-- 指定每次配置文件更改后，自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<package name="sup" namespace="/" extends="bkyg">
+		<!-- 大分类新增 -->
+		<action name="supaddaction" class="supAction"
+			method="addSup">
+			<result name="success" type="redirectAction">
+				/supquerypage?page=1
+			</result>
+			<result name="error">
+				/class_add.jsp
+			</result>
+		</action>
+		<!-- 查询所有大分类 -->
+		<action name="supqueryall" class="supAction"
+			method="querySup">
+			<result name="success">
+				/class_manage.jsp
+			</result>
+		</action>
+		<!-- 分页查询所有大分类 -->
+		<action name="supquerypage" class="supAction"
+			method="querySupPage">
+			<result name="success">
+				/class_manage.jsp
+			</result>
+		</action>
+		<!-- 大分类删除 -->
+		<action name="deletesup" class="supAction"
+			method="deleteSup" >
+			<result name="success" type="redirectAction">
+				/supquerypage?page=${page}
+			</result>
+			<result name="error" type="redirectAction">
+				/supquerypage?page=${page}
+			</result>
+		</action>
+		<!-- 根据id查询大分类 -->
+		<action name="supquerybyid" class="supAction"
+			method="supById">
+			<result name="success">
+				/class_modify.jsp
+			</result>
+		</action>
+		<!-- 大分类修改 -->
+		<action name="updatesup" class="supAction"
+			method="updateSUP" >
+			<result name="success" type="redirectAction">
+				/supquerypage?page=1
+			</result>
+			<result name="error" type="redirectAction">
+				/supquerybyid?supid=${supid}
+				
+			</result>
+		</action>
+	</package>
+</struts>

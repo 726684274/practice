@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xmlns:tx="http://www.springframework.org/schema/tx" 
+		xmlns:aop="http://www.springframework.org/schema/aop"
+		xmlns:context="http://www.springframework.org/schema/context" 
+		xmlns:jee="http://www.springframework.org/schema/jee"
+		xsi:schemaLocation="
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+			http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+			http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+			http://www.springframework.org/schema/jee 
+			http://www.springframework.org/schema/jee/spring-jee-2.5.xsd"
+			default-autowire="byType">
+			
+	<!-- 指向配置文件的地方 -->
+	<context:property-placeholder location="/cfg/datebase.properties" />
+   	<!-- 配置数据库连接池： -->
+  	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driverClassName}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+		<property name="maxActive" value="${maxActive}"></property>
+		<property name="maxIdle" value="${maxIdle}"></property>
+		<property name="minIdle" value="${minIdle}"></property>
+	</bean>  
+	<!-- 配置JDBC数据库： -->
+  	 	<bean id="dataSource1" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${driverClassName}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>  
+	<!-- 配置数据库C3P0连接池： -->
+	<!--<bean id="dataSource2" class="com.mchange.v2.c3p0.ComboPooledDataSource"  destroy-method="close">
+		<property name="driverClass" value="${driverClassName}"></property>
+		<property name="jdbcUrl" value="${url}"></property>
+		<property name="user" value="${username}"></property>
+		<property name="password" value="${password}"></property>
+		连接池中保留的最小连接数。  
+        <property name="minPoolSize" value="10" />
+        连接池中保留的最大连接数。
+        <property name="maxPoolSize" value="100" />  
+        最大空闲时间,超过该时间则连接被丢弃。若为0则永不丢弃。Default: 0
+        <property name="maxIdleTime" value="1800" />  
+        当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。
+        <property name="acquireIncrement" value="3" />  
+        JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。
+        <property name="maxStatements" value="100" />  
+        初始化时获取10个连接，取值应在minPoolSize与maxPoolSize之间。
+        <property name="initialPoolSize" value="10" />  
+        每隔多少秒检查所有连接池中的空闲连接。
+        <property name="idleConnectionTestPeriod" value="60" />  
+        定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 
+        <property name="acquireRetryAttempts" value="30" />  
+        获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试获取连接失败后该数据源将申明已断开并永久关闭。Default: false 
+        <property name="breakAfterAcquireFailure" value="false" />  
+        因性能消耗大请只在需要的时候使用它。如果设为true那么在每个connection提交的时候都将校验其有效性。建议使用idleConnectionTestPeriod或automaticTestTable等方法来提升连接测试的性能。Default: false
+        <property name="testConnectionOnCheckout" value="false" />  
+	</bean> -->
+	
+	
+	<!--hibernate 3版本的时候  <bean name="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean"> -->
+	<bean id="sessionFactory"   class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<!-- 配置数据源dbcp -->
+	<property name="dataSource" ref="dataSource"></property>
+		<!-- 配置实体对象的映射文件 -->
+	<property name="mappingResources">
+		<list> 
+			<!-- 登录模块的映射 -->
+		 	<value>com/lechenggu/bkeasygo/login/pojo/AdminBean.hbm.xml</value>
+		 	<!-- 用户模块的映射 -->
+		 	<value>com/lechenggu/bkeasygo/user/pojo/UserBean.hbm.xml</value>
+			<!-- 大分类模块的映射 -->
+			<value>com/lechenggu/bkeasygo/sup/pojo/SupBean.hbm.xml</value>
+			<!-- 小分类模块的映射 -->
+			<value>com/lechenggu/bkeasygo/sub/pojo/SubCategoryBean.hbm.xml</value>
+			<!-- 订单模块的映射 -->
+			<value>com/lechenggu/bkeasygo/order/pojo/OrderBean.hbm.xml</value>
+			<!-- 商品模块 -->
+			<value>com/lechenggu/bkeasygo/goods/pojo/GoodsBean.hbm.xml</value>
+			<!-- 公告模块的映射 -->
+			<value>com/lechenggu/bkeasygo/announcement/pojo/AnnouncementBean.hbm.xml</value> 
+		</list>
+	</property>
+	<!-- 相当于hibernate.cfg.xml配置的信息 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop> 
+				<prop key="hibernate.current_session_context_class">thread</prop> 
+			    <!--<prop key="hibernate.hbm2ddl.auto">update</prop>  修改表结构 -->			
+        </props>
+		</property>
+	</bean>
+	
+	
+	<!-- 注入此文件中不能出现接口  -->
+	<!-- Login -->
+	<bean id="loginAction" class="com.lechenggu.bkeasygo.login.action.LoginAction"></bean>
+	<bean id="loginServiceImpl" class="com.lechenggu.bkeasygo.login.service.impl.LoginServiceImpl"></bean>
+	<bean id="loginDaoImpl" class="com.lechenggu.bkeasygo.login.dao.impl.LoginDaoImpl"></bean>
+	<!-- 用户 -->
+	<bean id="userAction" class="com.lechenggu.bkeasygo.user.action.UserAction"></bean>
+	<bean id="userServiceImpl" class="com.lechenggu.bkeasygo.user.service.impl.UserServiceImpl"></bean>
+	<bean id="userDaoImpl" class="com.lechenggu.bkeasygo.user.dao.impl.UserDaoImpl"></bean>
+	<!-- 大分类 -->
+	<bean id="supAction" class="com.lechenggu.bkeasygo.sup.action.SupAction"></bean>
+	<bean id="supServiceImpl" class="com.lechenggu.bkeasygo.sup.service.impl.SupServiceImpl"></bean>
+	<bean id="supDaoImpl" class="com.lechenggu.bkeasygo.sup.dao.impl.SupDaoImpl"></bean>
+	<!-- 小分类 -->
+	<bean id="subCategoryAction" class="com.lechenggu.bkeasygo.sub.action.SubCategoryAction"></bean>
+	<bean id="ajaxSupnameAction" class="com.lechenggu.bkeasygo.sub.action.AjaxSupnameAction"></bean>
+	<bean id="subCategoryServiceImpl" class="com.lechenggu.bkeasygo.sub.service.impl.SubCategoryServiceImpl"></bean>
+	<bean id="subCategoryDaoImpl" class="com.lechenggu.bkeasygo.sub.dao.impl.SubCategoryDaoImpl"></bean>
+	<!-- 订单 -->
+	 <bean id="orderAction" class="com.lechenggu.bkeasygo.order.action.OrderAction"></bean>
+	<bean id="orderServiceImpl" class="com.lechenggu.bkeasygo.order.service.impl.OrderServiceImpl"></bean>
+	<bean id="orderDaoImpl" class="com.lechenggu.bkeasygo.order.dao.impl.OrderDaoImpl"></bean> 
+	<!-- 商品 -->
+	<bean id="goodsAction" class="com.lechenggu.bkeasygo.goods.action.GoodsAction"></bean> 
+	<bean id="ajaxSupSubnameAction" class="com.lechenggu.bkeasygo.goods.action.AjaxSupSubnameAction"></bean> 
+	<bean id="goodsServiceImpl" class="com.lechenggu.bkeasygo.goods.service.impl.GoodsServiceImpl"></bean> 
+	<bean id="goodsDaoImpl" class="com.lechenggu.bkeasygo.goods.dao.impl.GoodsDaoImpl"></bean> 
+	<!-- 商品中查询大小分类的名称 -->
+	<!-- <bean id="ajaxSupSubnameAction" class="com.lechenggu.bkeasygo.goods.action.AjaxSupSubnameAction"></bean> -->
+	<!-- 公告 -->
+ 	<bean id="announcementAction" class="com.lechenggu.bkeasygo.announcement.action.AnnouncementAction"></bean>
+	<bean id="announcementServiceImpl" class="com.lechenggu.bkeasygo.announcement.service.impl.AnnouncementServiceImpl"></bean> 
+	<bean id="announcementDaoImpl" class="com.lechenggu.bkeasygo.announcement.dao.impl.AnnouncementDaoImpl"></bean> 
+	
+	
+</beans>

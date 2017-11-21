@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 文档类型定义(Document Type Definition)是一套为了 进行程序间的数据交换而建立的关于标记符的语法规则。 -->
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+<struts>
+<!-- 还用动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<!-- 指定每次配置文件更改后，自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<package name="goods" namespace="/" extends="bkyg">
+		<!-- 商品新增 -->
+		<action name="goodsaddaction"
+			class="goodsAction" method="addGoods">
+			<result name="success" type="redirectAction">
+				/goodsquerypage?gb.page=1
+			</result>
+			<result name="error">
+				/goods_add.jsp
+			</result>
+		</action>
+		<!-- 分页查询商品 -->
+		<action name="goodsquerypage"
+			class="goodsAction" method="queryGoodsPage">
+			<result name="success">
+				/goods_detail_manage.jsp
+			</result>
+		</action>
+		<!-- 商品删除 -->
+		<action name="deletegoods"
+			class="goodsAction" method="deleteGoods">
+			<result name="success" type="redirectAction">
+				/goodsquerypage?gb.page=${gb.page}
+			</result>
+			<result name="error" type="redirectAction">
+				/goodsquerypage?gb.page=${gb.page}
+			</result>
+		</action>
+		<!-- 根据id查询商品 -->
+		<action name="goodsquerybyid"
+			class="goodsAction" method="goodsById">
+			<result name="success">
+				/goods_detail_modify.jsp
+			</result>
+		</action>
+		<!-- 商品修改 -->
+		<action name="updategoods"
+			class="goodsAction" method="updateGoods">
+			<result name="success" type="redirectAction">
+				/goodsquerypage?gb.page=1
+			</result>
+			<result name="error" type="redirectAction">
+				/goodsquerybyid?gb.gid=${gb.gid}
+			</result>
+		</action>
+	</package>
+</struts>

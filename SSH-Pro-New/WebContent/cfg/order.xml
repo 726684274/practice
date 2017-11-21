@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 文档类型定义(Document Type Definition)是一套为了 进行程序间的数据交换而建立的关于标记符的语法规则。 -->
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+<struts>
+<!-- 还用动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<!-- 指定每次配置文件更改后，自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<package name="order" namespace="/" extends="bkyg">
+		<!-- 订单新增 -->
+		<action name="orderaddaction" class="orderAction"
+			method="addOrder">
+			<result name="success" type="redirectAction">
+				/orderqueryquery?page=1
+			</result>
+			<result name="error">
+				/order_add.jsp
+			</result>
+		</action>
+		<!-- 查询所有订单 -->
+		<action name="orderqueryall" class="orderAction"
+			method="queryOrder">
+			<result name="success">
+				/order_manage.jsp
+			</result>
+		</action>
+		<!-- 分页查询订单 -->
+		<action name="orderqueryquery" class="orderAction"
+			method="queryOrderPage">
+			<result name="success">
+				/order_manage.jsp
+			</result>
+		</action>
+		<!-- 订单删除 -->
+		<action name="deleteorder" class="orderAction"
+			method="deleteOrder">
+			<result name="success" type="redirectAction">
+				/orderqueryquery?page=${page}
+			</result>
+			<result name="error" type="redirectAction">
+				/orderqueryquery?page=${page}
+			</result>
+		</action>
+		<!-- 根据id查询订单-->
+		<action name="orderquerybyid" class="orderAction"
+			method="orderById">
+			<result name="success">
+				/order_modify.jsp
+			</result>
+		</action>
+		<!-- 订单查询 -->
+		<action name="updateorder" class="orderAction"
+			method="updateOrder">
+			<result name="success" type="redirectAction">
+				/orderqueryquery?page=1
+			</result>
+			<result name="error" type="redirectAction">
+				/orderquerybyid?oid=${oid}
+			</result>
+		</action>
+		<!-- 模糊查询订单编号和订单人 -->
+		<action name="queryoidandname" class="orderAction"
+			method="queryOidAndName">
+			<result name="success">
+				/order_manage.jsp
+			</result>
+			<result name="error" type="redirectAction">
+				/orderqueryquery?page=1
+			</result>
+		</action>
+	</package>
+</struts>

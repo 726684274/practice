@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 文档类型定义(Document Type Definition)是一套为了 进行程序间的数据交换而建立的关于标记符的语法规则。 -->
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+	
+<struts>
+<!-- 还用动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<!-- 指定每次配置文件更改后，自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	 <package name="announcement" namespace="/" extends="bkyg">
+		<!-- 公告新增 -->
+		<action name="announcementaddaction"
+			class="announcementAction"
+			method="addAnnouncement">
+			<result name="success" type="redirectAction">
+				/queryannouncementpage?page=1
+			</result>
+			<result name="error">
+				/announcement_add.jsp
+			</result>
+		</action>
+		<!-- 查询所有公告 -->
+		<action name="queryannouncementall"
+			class="announcementAction"
+			method="queryAnnouncement">
+			<result name="success">
+				/announcement_manage.jsp
+			</result>
+		</action>
+		<!-- 分页查询公告 -->
+		<action name="queryannouncementpage"
+			class="announcementAction"
+			method="queryAnnouncementPage">
+			<result name="success">
+				/announcement_manage.jsp
+			</result>
+		</action>
+		<!-- 公告删除 -->
+		<action name="deleteannouncement"
+			class="announcementAction"
+			method="deleteAnnouncement">
+			<result name="success" type="redirectAction">
+				/queryannouncementpage?page=${page}
+			</result>
+			<result name="error" type="redirectAction">
+				/queryannouncementpage?page=${page}
+			</result>
+		</action>
+		<!-- 根据id查询公告 -->
+		<action name="queryannouncementbyid"
+			class="announcementAction"
+			method="announcementById">
+			<result name="success">
+				/announcement_modify.jsp
+			</result>
+		</action>
+		<!-- 公告修改 -->
+		<action name="updateannouncement"
+			class="announcementAction"
+			method="updateAnnouncement">
+			<result name="success" type="redirectAction">
+				/queryannouncementpage?page=1
+			</result>
+			<result name="error" type="redirectAction">
+				/queryannouncementbyid?bid=${bid}
+			</result>
+		</action>
+	</package>
+</struts>

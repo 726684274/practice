@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<!-- name指实体类所在的路径    table是数据库中的表名  （对应数据库中要大写） -->
+	<class name="com.lechenggu.bkeasygo.goods.pojo.GoodsBean" table="TGOODS">
+		<!-- 主键字段映射描述 -->
+		<!-- name 指定属性名    type指定数据类型 -->
+		<id name="gid" type="java.lang.Integer">
+			<!-- name指定字段名（与数据库一致   大写） -->
+			<column name="GID"></column>
+			<generator class="sequence">
+  				<param name="sequence">
+   					sequence_tgoods
+  				</param>
+			</generator>
+		</id>
+		<!-- 普通字段映射描述 -->
+		<property name="gname" type="java.lang.String">
+			<column name="GNAME"></column>
+		</property>
+		<!-- <property name="supid" type="java.lang.Integer">
+			<column name="SUPID"></column>
+		</property>
+		<property name="subid" type="java.lang.Integer">
+			<column name="SUBID"></column>
+		</property> -->
+		<property name="gprice" type="java.lang.Double">
+			<column name="GPRICE"></column>
+		</property>
+		<property name="gnumber" type="java.lang.Integer">
+			<column name="GNUMBER"></column>
+		</property>
+		<property name="gbigpic" type="java.lang.String">
+			<column name="GBIGPIC"></column>
+		</property>
+		<property name="gnumberroduce" type="java.lang.String">
+			<column name="GNUMBERRODUCE"></column>
+		</property>
+		<property name="iftop" type="java.lang.Integer">
+			<column name="IFTOP"></column>
+		</property>
+		<property name="createman" type="java.lang.Integer">
+			<column name="CREATEMAN"></column>
+		</property>
+		<property name="createtime" type="java.util.Date">
+			<column name="CREATETIME"></column>
+		</property>
+		<!-- 配置多对一 -->
+		 <many-to-one name="sup" lazy="false" fetch="join" class="com.lechenggu.bkeasygo.sup.pojo.SupBean">
+			<!-- 关联字段 -->
+			<column name="SUPID"></column>
+		</many-to-one>
+		<!-- 配置多对一 -->
+		 <many-to-one name="sub" lazy="false" fetch="join" class="com.lechenggu.bkeasygo.sub.pojo.SubCategoryBean">
+			<!-- 关联字段 -->
+			<column name="SUBID"></column>
+		</many-to-one>
+		
+	</class>	
+
+
+</hibernate-mapping>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 文档类型定义(Document Type Definition)是一套为了 进行程序间的数据交换而建立的关于标记符的语法规则。 -->
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+	
+<struts>
+<!-- 还用动态方法调用 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>
+	<!-- 指定每次配置文件更改后，自动重新加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<!-- 用户 -->
+	<package name="user" namespace="/" extends="bkyg">
+		<!-- 用户新增 -->
+		<action name="useraddaction" class="userAction" method="addUser">
+			<result name="success" type="redirectAction">
+				/queryuserpage?page=1
+			</result>
+			<result name="error">
+				/user_add.jsp
+			</result>
+		</action>
+		<!-- 用户查询 -->
+		<action name="queryuserall" class="userAction" method="queryUser">
+			<result name="success">
+				/user_manage.jsp
+			</result>
+		</action>
+		<!-- 分页查询用户 -->
+		<action name="queryuserpage" class="userAction" method="queryUserPage">
+			<result name="success">
+				/user_manage.jsp
+			</result>
+		</action>
+		<!-- 删除用户 -->
+		<action name="userdelete" class="userAction" method="deleteUser">
+			<result name="success" type="redirectAction">
+				/queryuserpage?page=${page}
+			</result>
+			<result name="error" type="redirectAction">
+				/queryuserpage?page=${page}
+			</result>
+		</action>
+		<!-- 解冻用户 -->
+		<action name="freeuser" class="userAction" method="freeUser">
+			<result name="success" type="redirectAction">
+				/queryuserpage?page=${page}
+			</result>
+			<result name="error" type="redirectAction">
+				/queryuserpage?page=${page}
+			</result>
+		</action>
+		<!-- 冻结用户 -->
+		<action name="freezeuser" class="userAction" method="freezeUser">
+			<result name="success" type="redirectAction">
+				/queryuserpage?page=${page}
+			</result>
+			<result name="error" type="redirectAction">
+				/queryuserpage?page=${page}
+			</result>
+		</action>
+		<!-- 根据id查询用户 -->
+		<action name="queryuserbyid" class="userAction" method="queryUserById">
+			<result name="success">
+				/user_modify.jsp
+			</result>
+		</action>
+		<!-- 修改用户 -->
+		<action name="updateuser" class="userAction" method="updateUser">
+			<result name="success" type="redirectAction">
+				/queryuserpage?page=1
+			</result>
+			<result name="error" type="redirectAction">
+				/queryuserbyid?userid=${userid}
+			</result>
+		</action>
+	</package>
+</struts>
